@@ -86,6 +86,29 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./src/js/lib/components/dropdown.js":
+/*!*******************************************!*\
+  !*** ./src/js/lib/components/dropdown.js ***!
+  \*******************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../core */ "./src/js/lib/core.js");
+
+
+_core__WEBPACK_IMPORTED_MODULE_0__["default"].prototype.dropdown = function () {
+  for (let i = 0; i < this.length; i++) {
+    const id = this[i].getAttribute('id');
+    Object(_core__WEBPACK_IMPORTED_MODULE_0__["default"])(this[i]).click(() => {
+      Object(_core__WEBPACK_IMPORTED_MODULE_0__["default"])(`[data-toggle-id="${id}"]`).fadeToggle(300);
+    });
+  }
+}; // $('.dropdown-toggle').dropdown();
+
+/***/ }),
+
 /***/ "./src/js/lib/core.js":
 /*!****************************!*\
   !*** ./src/js/lib/core.js ***!
@@ -136,8 +159,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_classes__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./modules/classes */ "./src/js/lib/modules/classes.js");
 /* harmony import */ var _modules_handlers__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./modules/handlers */ "./src/js/lib/modules/handlers.js");
 /* harmony import */ var _modules_actions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./modules/actions */ "./src/js/lib/modules/actions.js");
-/* harmony import */ var _modules_attribute__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./modules/attribute */ "./src/js/lib/modules/attribute.js");
-/* harmony import */ var _modules_effects__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./modules/effects */ "./src/js/lib/modules/effects.js");
+/* harmony import */ var _modules_effects__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./modules/effects */ "./src/js/lib/modules/effects.js");
+/* harmony import */ var _components_dropdown__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/dropdown */ "./src/js/lib/components/dropdown.js");
 
 
 
@@ -283,44 +306,6 @@ _core__WEBPACK_IMPORTED_MODULE_0__["default"].prototype.siblings = function () {
 
   for (; numberOfItems < objLength; numberOfItems++) {
     delete this[numberOfItems];
-  }
-
-  return this;
-};
-
-/***/ }),
-
-/***/ "./src/js/lib/modules/attribute.js":
-/*!*****************************************!*\
-  !*** ./src/js/lib/modules/attribute.js ***!
-  \*****************************************/
-/*! no exports provided */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../core */ "./src/js/lib/core.js");
-
-
-_core__WEBPACK_IMPORTED_MODULE_0__["default"].prototype.addAttr = function (...attrNames) {
-  for (let i = 0; i < this.length; i++) {
-    this[i].setAttribute(...attrNames);
-  }
-
-  return this;
-};
-
-_core__WEBPACK_IMPORTED_MODULE_0__["default"].prototype.removeAttr = function (...attrNames) {
-  for (let i = 0; i < this.length; i++) {
-    this[i].removeAttribute(...attrNames);
-  }
-
-  return this;
-};
-
-_core__WEBPACK_IMPORTED_MODULE_0__["default"].prototype.toggleAttr = function (attrNames) {
-  for (let i = 0; i < this.length; i++) {
-    this[i].toggleAttribute(attrNames);
   }
 
   return this;
@@ -503,6 +488,34 @@ _core__WEBPACK_IMPORTED_MODULE_0__["default"].prototype.fadeOut = function (dur,
   return this;
 };
 
+_core__WEBPACK_IMPORTED_MODULE_0__["default"].prototype.fadeToggle = function (dur, display, fin) {
+  for (let i = 0; i < this.length; i++) {
+    if (window.getComputedStyle(this[i]).display === 'none') {
+      this[i].style.display = display || 'block';
+
+      const _fadeIn = complection => {
+        this[i].style.opacity = complection;
+      };
+
+      const ani = this.animateOverTime(dur, _fadeIn, fin);
+      requestAnimationFrame(ani);
+    } else {
+      const _fadeOut = complection => {
+        this[i].style.opacity = 1 - complection;
+
+        if (complection === 1) {
+          this[i].style.display = 'none';
+        }
+      };
+
+      const ani = this.animateOverTime(dur, _fadeOut, fin);
+      requestAnimationFrame(ani);
+    }
+  }
+
+  return this;
+};
+
 /***/ }),
 
 /***/ "./src/js/lib/modules/handlers.js":
@@ -574,20 +587,30 @@ __webpack_require__.r(__webpack_exports__);
 // $('button').on('click', function() {
 //     $(this).toggleClass('active');
 // });
-
-$('button').on('click', function () {
-  $('div').eq(2).toggleClass('active');
-}); // $('button').toggleAttr('data-btn');
+// $('button').on('click', function() {
+//     $('div').eq(2).toggleClass('active');
+// });
+// $('button').toggleAttr('data-btn');
 // $('button').html('hello');
-
-$('div').click(function () {
-  console.log($(this).index());
-}); // console.log($('div').eq(2).find('.some'));
+// $('div').click(function() {
+//     console.log($(this).index());
+// });
+// console.log($('div').eq(2).find('.some'));
 // console.log($('.some').eq(1).closest('.findme'));
 // console.log($('.some').closest('.findme'));
 // console.log($('.findme').siblings('.findme'));
+// $('.findme').fadeIn(1800);
 
-$('.findme').fadeIn(1800);
+$('#first').on('click', () => {
+  $('div').eq(1).fadeToggle(800);
+});
+$('[data-count="second"]').on('click', () => {
+  $('div').eq(2).fadeToggle(800);
+});
+$('button').eq(2).on('click', () => {
+  $('.w-500').fadeOut(800);
+});
+$('.dropdown-toggle').dropdown();
 
 /***/ })
 
