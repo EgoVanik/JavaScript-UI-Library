@@ -39,4 +39,39 @@ $('[data-count="second"]').on('click', () => {
 $('button').eq(2).on('click', () => {
     $('.w-500').fadeOut(800);
 });
+
 $('.dropdown-toggle').dropdown();
+
+// modal
+$('#trigger').click(() => $('#trigger').createModal({
+    text: {
+        title: 'Modal title',
+        body: 'TEST TEST TEST TEST'
+    },
+    btns: {
+        count: 3,
+        settings: [
+            [
+                'Close',
+                ['btn-danger', 'mr-10'],
+                true
+            ],
+            [
+                'Save changes',
+                ['btn-success'],
+                false,
+                () => {
+                    alert('Данные сохранены');
+                }
+            ],
+            [
+                'Another btn',
+                ['btn-warning', 'ml-10'],
+                false,
+                () => {
+                    alert('Hello World');
+                }
+            ]
+        ]
+    }
+}));
