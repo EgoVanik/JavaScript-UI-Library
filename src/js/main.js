@@ -1,6 +1,7 @@
 import './lib/lib';
 
 // run^ gulp prod
+// в test находится production
 
 // $('.active').on('click', sayHello);
 
